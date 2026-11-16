@@ -1,10 +1,3 @@
-{{ config(materialized='view') }}
-
-/*
-    select *, CASE status WHEN '01' THEN 'En cours' WHEN '02' THEN 'Terminée' WHEN '03' THEN 'Annulée' END AS StatusDescription
-    from bronze.orders;
-*/
-
 SELECT
     orderid,
     orderdate,

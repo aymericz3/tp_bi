@@ -3,7 +3,11 @@ version: 2
 sources:
   - name: bronze
     schema: bronze
+    description: "Raw data loaded from the source system"
     tables:
       - name: customers
+        description: "One raw per customer"
       - name: orders
+        description: "One row per order"
       - name: orderitems
+        description: "One row per item in an order"
