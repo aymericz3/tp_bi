@@ -6,17 +6,55 @@ sources:
     description: "Raw data loaded from the source system"
     tables:
       - name: customers
-        description: "One raw per customer"
+        description: "One row per customer"
+        columns:
+          - name: customerid
+            tests:
+              - unique
+              - not_null
+
       - name: orders
         description: "One row per order"
+        columns:
+          - name: orderid
+            tests:
+              - unique
+              - not_null
+          - name: status
+            tests:
+              - accepted_values:
+                  values: ['01', '02', '03']
+          - name: customerid
+            tests:
+              - relationships:
+                  to: source('bronze', 'customers')
+                  field: customerid
+
       - name: orderitems
         description: "One row per item in an order"
+        tests:
+          - dbt_utils.unique_combination_of_columns:
+              combination_of_columns:
+                - orderid
+                - orderitemid
+        columns:
+          - name: orderid
+            tests:
+              - not_null
+              - relationships:
+                  to: source('bronze', 'orders')
+                  field: orderid
 
-  - name: training          # name used in source('training', ...)
-    schema: TRAINING        # exact schema name in MySQL (case matters)
+      # Declared for the row count test (step 3)
+      - name: employees
+      - name: stores
+      - name: suppliers
+      - name: products
+
+  - name: training
+    schema: TRAINING
     description: "Sales by country, loaded from training.sql"
     tables:
       - name: sales_india
       - name: sales_uk
       - name: sales_us
-  
