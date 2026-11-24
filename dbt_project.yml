@@ -39,3 +39,11 @@ models:
     # Config indicated by + and applies to all files under models/example/
     # example:
     #   +materialized: view
+    profit:                 # new folder models/profit/
+      +materialized: table
+      +schema: gold
+
+vars:                       # top level, aligned with models:
+  eur_rate_us: 0.8906
+  eur_rate_uk: 1.1777
+  eur_rate_inde: 0.00926

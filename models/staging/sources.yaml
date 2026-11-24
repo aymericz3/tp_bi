@@ -11,3 +11,12 @@ sources:
         description: "One row per order"
       - name: orderitems
         description: "One row per item in an order"
+
+  - name: training          # name used in source('training', ...)
+    schema: TRAINING        # exact schema name in MySQL (case matters)
+    description: "Sales by country, loaded from training.sql"
+    tables:
+      - name: sales_india
+      - name: sales_uk
+      - name: sales_us
+  
